@@ -6,6 +6,9 @@ public class POJO {
 	public POJO() {
 	}
 	
+	public POJO(String input) {
+		this.someInt = Integer.valueOf(input);
+	}
 	
     @Override
     public String toString() {
