@@ -45,7 +45,7 @@ public class Game {
         Game other = (Game) obj;
         
         if(!this.opponents.equals(other.opponents)) { return false; }
-        if(!this.yours.equals(yours)) { return false; }
+        if(!this.yours.equals(other.yours)) { return false; }
         
         return true;
     }

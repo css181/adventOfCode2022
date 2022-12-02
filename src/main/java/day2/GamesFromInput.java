@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 
-import day1.Elf;
 import utilities.FileUtility;
 
 public class GamesFromInput {
