@@ -30,6 +30,14 @@ public class GamesFromInput {
 		}
 		games = gameList;
 	}
+	public void populateGamesPart2() {
+		ArrayList<Game> gameList = new ArrayList<Game>();
+		ArrayList<String> gamesFromInput = FileUtility.convertFileToStringArray(file);
+		for (String game : gamesFromInput) {
+			gameList.add(new Game(Moves.convert(game.charAt(0)), Results.convert(game.charAt(2))));
+		}
+		games = gameList;
+	}
 
 	public ArrayList<Game> getGames() {
 		return games;

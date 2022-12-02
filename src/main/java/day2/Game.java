@@ -10,6 +10,11 @@ public class Game {
 		this.yours = yours;
 	}
 
+	public Game(Moves opponent, Results result) {
+		this.opponents = opponent;
+		this.yours = GameJudger.getYourMove(opponent, result);
+	}
+
 	public Moves getOpponents() {
 		return opponents;
 	}

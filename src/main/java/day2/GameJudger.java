@@ -42,5 +42,38 @@ public class GameJudger {
 		}
 		return score;
 	}
+	
+	public static Moves getYourMove(Moves opponent, Results result) {
+		switch (opponent) {
+			case ROCK: {
+				if(result.WIN.equals(result)) {
+					return Moves.PAPER;
+				} else if (result.TIE.equals(result)) {
+					return Moves.ROCK;
+				} else {
+					return Moves.SCISSORS;
+				}
+			}
+			case PAPER: {
+				if(result.WIN.equals(result)) {
+					return Moves.SCISSORS;
+				} else if (result.TIE.equals(result)) {
+					return Moves.PAPER;
+				} else {
+					return Moves.ROCK;
+				}
+			}
+			case SCISSORS: {
+				if(result.WIN.equals(result)) {
+					return Moves.ROCK;
+				} else if (result.TIE.equals(result)) {
+					return Moves.SCISSORS;
+				} else {
+					return Moves.PAPER;
+				}
+			}
+		}
+		throw new RuntimeException("Invalid opponent move: " + opponent);
+	}
 
 }
