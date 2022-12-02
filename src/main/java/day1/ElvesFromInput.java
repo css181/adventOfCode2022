@@ -46,4 +46,25 @@ public class ElvesFromInput {
 		return highestCalorie;
 	}
 
+	public Long getHighestCalorieCountTop3Elves() {
+		long highestCalorie = 0;
+		long secondHighestCalorie = 0;
+		long thridHighestCalorie = 0;
+		for (Elf elf : elves) {
+			if(elf.getTotalCalories() > highestCalorie) {
+				thridHighestCalorie = secondHighestCalorie;
+				secondHighestCalorie = highestCalorie;
+				highestCalorie = elf.getTotalCalories();
+			}
+			else if (elf.getTotalCalories() > secondHighestCalorie) {
+				thridHighestCalorie = secondHighestCalorie;
+				secondHighestCalorie = elf.getTotalCalories();
+			}
+			else if (elf.getTotalCalories() > thridHighestCalorie) {
+				thridHighestCalorie = elf.getTotalCalories();
+			}
+		}
+		return highestCalorie + secondHighestCalorie + thridHighestCalorie;
+	}
+
 }
