@@ -21,7 +21,7 @@ public class RugsackFromInput {
 		RugsackFromInput.file = file;
 	}
 
-	public void populateRugSacks() {
+	public void populateRugSacksAndElfGroups() {
 		ArrayList<Rugsack> rugsackList = new ArrayList<Rugsack>();
 		ArrayList<ArrayList<Character>> input = FileUtility.convertFileToCharacterArray(file);
 		ElfGroup curElfGroup = new ElfGroup();
@@ -29,29 +29,22 @@ public class RugsackFromInput {
 		int counter = 0;
 		for (ArrayList<Character> inputSack : input) {
 			counter++;
-			rugsackList.add(new Rugsack(inputSack));
-			curElfGroup.addSack(inputSack);
+			Rugsack sack = new Rugsack(inputSack);
+			rugsackList.add(sack);
+			curElfGroup.addSack(sack);
 			if(counter%3==0) {
 				elfGroups.add(curElfGroup);
 				curElfGroup = new ElfGroup();
 			}
 		}
 		this.rugsackList = rugsackList;
-		
-		
 	}
 
 	public ArrayList<Rugsack> getRugsackList() {
 		return rugsackList;
 	}
 
-	public void setRugsackList(ArrayList<Rugsack> rugsackList) {
-		this.rugsackList = rugsackList;
-	}
-
 	public ArrayList<ElfGroup> getElfGroups() {
 		return elfGroups;
 	}
-
-	
 }

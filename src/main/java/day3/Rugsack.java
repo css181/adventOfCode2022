@@ -6,10 +6,12 @@ public class Rugsack {
 
 	ArrayList<Character> compartment1;
 	ArrayList<Character> compartment2;
+	ArrayList<Character> allChars;
 	public Rugsack() {
 	}
 	
 	public Rugsack(ArrayList<Character> input) {
+		allChars = input;
 		compartment1 = new ArrayList<Character>();
 		compartment2 = new ArrayList<Character>();
 		for(int pos=0; pos<input.size()/2; pos++) {
@@ -20,27 +22,16 @@ public class Rugsack {
 		}
 	}
 	
-	public ArrayList<Character> getEntireSackContents() {
-		ArrayList<Character> contents = new ArrayList<Character>();
-		contents.addAll(compartment1);
-		contents.addAll(compartment2);
-		return contents;
+	public ArrayList<Character> getAllChars() {
+		return allChars;
 	}
 	
     public ArrayList<Character> getCompartment1() {
 		return compartment1;
 	}
 
-	public void setCompartment1(ArrayList<Character> compartment1) {
-		this.compartment1 = compartment1;
-	}
-
 	public ArrayList<Character> getCompartment2() {
 		return compartment2;
-	}
-
-	public void setCompartment2(ArrayList<Character> compartment2) {
-		this.compartment2 = compartment2;
 	}
 
 	@Override
@@ -62,8 +53,8 @@ public class Rugsack {
         if(!(obj instanceof Rugsack)) { return false; }
         Rugsack other = (Rugsack) obj;
         
-        if(this.compartment1 != other.compartment1) { return false; }
-        if(this.compartment2 != other.compartment2) { return false; }
+        if(!this.compartment1.equals(other.compartment1)) { return false; }
+        if(!this.compartment2.equals(other.compartment2)) { return false; }
         
         return true;
     }

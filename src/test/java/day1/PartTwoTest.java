@@ -33,6 +33,6 @@ class PartTwoTest {
 	void partTwoAnswer() throws Exception {
 		elvesFromInput.populateElves();
 //		System.out.println(elvesFromInput.getHighestCalorieCountTop3Elves());
-		assertEquals(212117, elvesFromInput.getHighestCalorieCount());
+		assertEquals(212117, elvesFromInput.getHighestCalorieCountTop3Elves());
 	}
 }

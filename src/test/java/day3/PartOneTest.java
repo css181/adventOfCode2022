@@ -53,7 +53,7 @@ public class PartOneTest {
 		
 		URL fileName = getClass().getResource("SampleInput.txt");
 		rugsackFromInput.setFileToUse(new File(fileName.getPath()));
-		rugsackFromInput.populateRugSacks();
+		rugsackFromInput.populateRugSacksAndElfGroups();
 		assertEquals(expectedCompartment1, rugsackFromInput.getRugsackList().get(0).getCompartment1());
 		assertEquals(expectedCompartment2, rugsackFromInput.getRugsackList().get(0).getCompartment2());
 	}
@@ -62,7 +62,7 @@ public class PartOneTest {
 	void verify_priority_of_each_sample_rugsack() throws Exception {
 		URL fileName = getClass().getResource("SampleInput.txt");
 		rugsackFromInput.setFileToUse(new File(fileName.getPath()));
-		rugsackFromInput.populateRugSacks();
+		rugsackFromInput.populateRugSacksAndElfGroups();
 		ArrayList<Rugsack> sackList = rugsackFromInput.getRugsackList();
 		assertEquals(16, sackList.get(0).getPriority());
 		assertEquals(38, sackList.get(1).getPriority());
@@ -74,7 +74,7 @@ public class PartOneTest {
 	
 	@Test
 	void PartOne_Answer() throws Exception {
-		rugsackFromInput.populateRugSacks();
+		rugsackFromInput.populateRugSacksAndElfGroups();
 		ArrayList<Rugsack> sackList = rugsackFromInput.getRugsackList();
 		int totalPriority = 0;
 		for (Rugsack rugsack : sackList) {

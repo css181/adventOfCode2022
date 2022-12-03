@@ -39,24 +39,20 @@ public class ElfGroup {
 	}
 
 	private char getCharInCommonOfAllSacks() {
-		for (Character letter : sacks.get(0).getEntireSackContents()) {
-			if(sacks.get(1).getEntireSackContents().contains(letter) &&
-					sacks.get(2).getEntireSackContents().contains(letter)) {
+		for (Character letter : sacks.get(0).getAllChars()) {
+			if(sacks.get(1).getAllChars().contains(letter) &&
+					sacks.get(2).getAllChars().contains(letter)) {
 				return letter;
 			}
 		}
 		throw new RuntimeException("No common letter in all 3 sacks.");
 	}
 
-	public void addSack(ArrayList<Character> sack) {
-		sacks.add(new Rugsack(sack));
+	public void addSack(Rugsack sack) {
+		sacks.add(sack);
 	}
-
-	public ArrayList<ArrayList<Character>> getSackListOfChars() {
-		ArrayList<ArrayList<Character>> sackListOfChars = new ArrayList<ArrayList<Character>>();
-		for (Rugsack sack : sacks) {
-			sackListOfChars.add(sack.getEntireSackContents());
-		}
-		return sackListOfChars;
+	
+	public ArrayList<Rugsack> getSacks() {
+		return sacks;
 	}
 }
