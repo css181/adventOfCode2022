@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import day2.GamesFromInput;
 import utilities.FileUtility;
 
 
