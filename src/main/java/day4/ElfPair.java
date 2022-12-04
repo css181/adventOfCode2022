@@ -36,10 +36,18 @@ public class ElfPair {
 	}
 
 	public boolean doesHaveAnyOverlap() {
-		return (smallerElf.getStartRange() >= largerElf.getStartRange() &&
-				smallerElf.getStartRange() <= largerElf.getEndrange()) ||
-				(smallerElf.getEndrange() <= largerElf.getEndrange() &&
-				smallerElf.getEndrange() >= largerElf.getStartRange());
+		return smallerStartsInRangeOfLarger() ||
+				smallerEndsInRangeOfLarger();
+	}
+
+	private boolean smallerStartsInRangeOfLarger() {
+		return smallerElf.getStartRange() >= largerElf.getStartRange() &&
+				smallerElf.getStartRange() <= largerElf.getEndrange();
+	}
+
+	private boolean smallerEndsInRangeOfLarger() {
+		return smallerElf.getEndrange() <= largerElf.getEndrange() &&
+		smallerElf.getEndrange() >= largerElf.getStartRange();
 	}
 	
 	@Override
