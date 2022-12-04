@@ -39,4 +39,12 @@ public class ElfPairsFromInput {
 		}
 		return total;
 	}
+
+	public int getTotalOverlapPairs() {
+		int total = 0;
+		for (ElfPair elfPair : elfPairs) {
+			if(elfPair.doesHaveAnyOverlap()) { total++; }
+		}
+		return total;
+	}
 }
