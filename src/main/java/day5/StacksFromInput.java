@@ -75,6 +75,22 @@ public class StacksFromInput {
 		}
 	}
 
+	public void processInstructions9001() {
+		for (String instruction : instructions) {
+			int numToMove = getNumToMove(instruction);
+			int fromStackIndex = getFromStackIndex(instruction);
+			int toStackIndex = getToStackIndex(instruction);
+			
+			ArrayList<String> letters = new ArrayList<String>();
+			for(int moveNum=0; moveNum<numToMove; moveNum++) {
+				letters.add(stacks.get(fromStackIndex).pop());
+			}
+			for (int index=letters.size()-1; index>=0; index--) {
+				stacks.get(toStackIndex).push(letters.get(index));
+			}
+		}
+	}
+
 	protected Integer getNumToMove(String instruction) {
 		return Integer.valueOf(instruction.substring(5, instruction.indexOf("from")-1));
 	}
@@ -94,4 +110,5 @@ public class StacksFromInput {
 		}
 		return returnVal;
 	}
+
 }
