@@ -28,22 +28,10 @@ public class DataStreamFromInput {
 		return dataStream;
 	}
 
-	public int getIndexOfFirstUnique4Chars() {
+	public int getIndexOfFirstUniqueXChars(int numOfUnique) {
 		ArrayList<String> uniqueTestSet = new ArrayList<String>();
-		initializeUniqueTestSet(uniqueTestSet, 3);
-		for(int index=4; index<dataStream.length(); index++) {
-			uniqueTestSet.add(dataStream.substring(index-1, index));
-			if(containsAllUniqueChars(uniqueTestSet)) {
-				return index;
-			}
-			uniqueTestSet.remove(0);
-		}
-		return -1;
-	}
-	public int getIndexOfFirstUnique14Chars() {
-		ArrayList<String> uniqueTestSet = new ArrayList<String>();
-		initializeUniqueTestSet(uniqueTestSet, 13);
-		for(int index=14; index<dataStream.length(); index++) {
+		initializeUniqueTestSet(uniqueTestSet, numOfUnique-1);
+		for(int index=numOfUnique; index<dataStream.length(); index++) {
 			uniqueTestSet.add(dataStream.substring(index-1, index));
 			if(containsAllUniqueChars(uniqueTestSet)) {
 				return index;

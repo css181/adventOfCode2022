@@ -36,13 +36,13 @@ public class PartTwoTest {
 		URL fileName = getClass().getResource("SampleInput.txt");
 		dataStreamFromInput.setFileToUse(new File(fileName.getPath()));
 		dataStreamFromInput.populateDataStream();
-		assertEquals(19, dataStreamFromInput.getIndexOfFirstUnique14Chars());
+		assertEquals(19, dataStreamFromInput.getIndexOfFirstUniqueXChars(14));
 	}
 	
 	@Test
 	void partOne_Answer() throws Exception {
 		dataStreamFromInput.populateDataStream();
-//		System.out.println(dataStreamFromInput.getIndexOfFirstUnique14Chars());
-		assertEquals(2313, dataStreamFromInput.getIndexOfFirstUnique14Chars());
+//		System.out.println(dataStreamFromInput.getIndexOfFirstUniqueXChars(14));
+		assertEquals(2313, dataStreamFromInput.getIndexOfFirstUniqueXChars(14));
 	}
 }
