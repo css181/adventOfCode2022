@@ -30,20 +30,36 @@ public class DataStreamFromInput {
 
 	public int getIndexOfFirstUnique4Chars() {
 		ArrayList<String> uniqueTestSet = new ArrayList<String>();
-		uniqueTestSet.add(dataStream.substring(0, 1));
-		uniqueTestSet.add(dataStream.substring(1, 2));
-		uniqueTestSet.add(dataStream.substring(2, 3));
+		initializeUniqueTestSet(uniqueTestSet, 3);
 		for(int index=4; index<dataStream.length(); index++) {
 			uniqueTestSet.add(dataStream.substring(index-1, index));
-			if(contains4UniqueChars(uniqueTestSet)) {
+			if(containsAllUniqueChars(uniqueTestSet)) {
 				return index;
 			}
 			uniqueTestSet.remove(0);
 		}
 		return -1;
 	}
+	public int getIndexOfFirstUnique14Chars() {
+		ArrayList<String> uniqueTestSet = new ArrayList<String>();
+		initializeUniqueTestSet(uniqueTestSet, 13);
+		for(int index=14; index<dataStream.length(); index++) {
+			uniqueTestSet.add(dataStream.substring(index-1, index));
+			if(containsAllUniqueChars(uniqueTestSet)) {
+				return index;
+			}
+			uniqueTestSet.remove(0);
+		}
+		return -1;
+	}
+	
+	private void initializeUniqueTestSet(ArrayList<String> uniqueTestSet, int numOfCharsToInit) {
+		for(int x=0; x<numOfCharsToInit; x++) {
+			uniqueTestSet.add(dataStream.substring(x, x+1));
+		}
+	}
 
-	private boolean contains4UniqueChars(ArrayList<String> uniqueTestSet) {
+	private boolean containsAllUniqueChars(ArrayList<String> uniqueTestSet) {
 		boolean areAllUnique = true;
 		for(int x=0; x<uniqueTestSet.size()-1; x++) { //last one is guaranteed to be unique to the last index if the rest are
 			if(uniqueTestSet.lastIndexOf(uniqueTestSet.get(x)) != x) {
