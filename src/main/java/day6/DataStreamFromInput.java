@@ -1,0 +1,57 @@
+package day6;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+
+import utilities.FileUtility;
+
+public class DataStreamFromInput {
+
+	private static File file;
+	private String dataStream;
+	
+	public DataStreamFromInput() {
+		URL fileName = getClass().getResource("Input.txt");
+		file = new File(fileName.getPath());
+	}
+	
+	protected void setFileToUse(File file) {
+		DataStreamFromInput.file = file;
+	}
+
+	public void populateDataStream() {
+		dataStream = FileUtility.convertFileToString(file);
+	}
+
+	public String getDataStream() {
+		return dataStream;
+	}
+
+	public int getIndexOfFirstUnique4Chars() {
+		ArrayList<String> uniqueTestSet = new ArrayList<String>();
+		uniqueTestSet.add(dataStream.substring(0, 1));
+		uniqueTestSet.add(dataStream.substring(1, 2));
+		uniqueTestSet.add(dataStream.substring(2, 3));
+		for(int index=4; index<dataStream.length(); index++) {
+			uniqueTestSet.add(dataStream.substring(index-1, index));
+			if(contains4UniqueChars(uniqueTestSet)) {
+				return index;
+			}
+			uniqueTestSet.remove(0);
+		}
+		return -1;
+	}
+
+	private boolean contains4UniqueChars(ArrayList<String> uniqueTestSet) {
+		boolean areAllUnique = true;
+		for(int x=0; x<uniqueTestSet.size()-1; x++) { //last one is guaranteed to be unique to the last index if the rest are
+			if(uniqueTestSet.lastIndexOf(uniqueTestSet.get(x)) != x) {
+				areAllUnique = false;
+				break;
+			}
+		}
+		return areAllUnique;
+	}
+
+}
