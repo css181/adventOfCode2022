@@ -66,17 +66,15 @@ public class FileSystemFromInput {
 		}
 		return curDir;
 	}
-
+	
+	//TODO: find a more efficient way of finding all Dirs
 	@SuppressWarnings("unchecked")
-	public Long getSumOfDirSizesThatAreLTE100000() {
-		long total = 0;
-		curDir = getRootDir();
+	public ArrayList<Directory> getListOfAllDirs() {
 		ArrayList<Directory> allDirs = new ArrayList<Directory>();
 		ArrayList<Directory> curList = new ArrayList<Directory>();
 		allDirs.add(getRootDir());
-		int allDirStartCount = 0;
+		int allDirStartCount = 1;
 		do {			
-			//TODO: find a more efficient way of finding all Dirs
 			allDirStartCount = allDirs.size();
 			curList = (ArrayList<Directory>) allDirs.clone();
 			for (Directory dir : curList) {				
@@ -87,8 +85,13 @@ public class FileSystemFromInput {
 				}
 			}
 		} while (allDirStartCount!=allDirs.size());
+		return allDirs;
+	}
+
+	public Long getSumOfDirSizesThatAreLTE100000() {
+		long total = 0;
 		
-		for (Directory dir : allDirs) {
+		for (Directory dir : getListOfAllDirs()) {
 			if(dir.getTotalSize() <= 100000) {
 				total+=dir.getTotalSize();
 			}
