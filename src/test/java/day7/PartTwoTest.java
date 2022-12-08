@@ -50,7 +50,7 @@ public class PartTwoTest {
 		//Get the list of all dirs, sort them, then find the one closest to, but above:
 			//30000000-(70000000-50822529l)
 		ArrayList<Directory> allDirs = new ArrayList<Directory>();
-		allDirs = fileSystemFromInput.getListOfAllDirsFromBaseDir(fileSystemFromInput.getRootDir(), allDirs);
+		allDirs = fileSystemFromInput.getListOfAllDirs();
 		long closest = Integer.MAX_VALUE;
 		long target = 30000000-(70000000-50822529l);
 		for (Directory dir : allDirs) {
