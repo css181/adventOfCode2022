@@ -4,14 +4,24 @@ public class Tree {
 
 	private int height;
 	private boolean isVisible;
+	private long scenicScore;
 	
 	public Tree(int height) {
 		this.height = height;
 		this.isVisible = true;
+		this.scenicScore = 0l;
 	}
 
 	protected int getHeight() {
 		return height;
+	}
+
+	protected long getScenicScore() {
+		return scenicScore;
+	}
+
+	protected void setScenicScore(long scenicScore) {
+		this.scenicScore = scenicScore;
 	}
 
 	protected boolean isVisible() {
@@ -23,7 +33,7 @@ public class Tree {
 
 	@Override
     public String toString() {
-    	String print = "Height: " + height + " - isVis: " + isVisible;
+    	String print = "Height: " + height + " - isVis: " + isVisible + " - scenic: " + scenicScore;
 		return print;
     } 
     

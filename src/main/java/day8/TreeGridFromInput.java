@@ -103,5 +103,70 @@ public class TreeGridFromInput {
 		return total;
 	}
 
-	
+	public long getHighestScenicScore() {
+		long highest = 0l;
+		for(int row=0; row<treeGrid.size(); row++) {
+			for(int col=0; col<treeGrid.get(row).size(); col++) {
+				if(treeGrid.get(row).get(col).getScenicScore() > highest) {
+					highest=treeGrid.get(row).get(col).getScenicScore();
+				}
+			}
+		}
+		return highest;
+	}
+
+	public void assignScenicScores() {
+		for(int row=1; row<treeGrid.size()-1; row++) {
+			for(int col=1; col<treeGrid.get(row).size()-1; col++) {
+				Tree curTree = treeGrid.get(row).get(col);
+				curTree.setScenicScore(
+						treesVisLeft(curTree.getHeight(), row, col) * 
+						treesVisRight(curTree.getHeight(), row, col) * 
+						treesVisUp(curTree.getHeight(), row, col) * 
+						treesVisDown(curTree.getHeight(), row, col)
+				);
+			}
+		}
+	}
+
+	private int treesVisLeft(int height, int row, int col) {
+		int canSee=0;
+		for(int lookCol=col-1; lookCol>=0; lookCol--) {
+			canSee++;
+			if(treeGrid.get(row).get(lookCol).getHeight() >= height) {
+				break;
+			}
+		}
+		return canSee;
+	}
+	private int treesVisRight(int height, int row, int col) {
+		int canSee=0;
+		for(int lookCol=col+1; lookCol<treeGrid.get(row).size(); lookCol++) {
+			canSee++;
+			if(treeGrid.get(row).get(lookCol).getHeight() >= height) {
+				break;
+			}
+		}
+		return canSee;
+	}
+	private int treesVisUp(int height, int row, int col) {
+		int canSee=0;
+		for(int lookRow=row-1; lookRow>=0; lookRow--) {
+			canSee++;
+			if(treeGrid.get(lookRow).get(col).getHeight() >= height) {
+				break;
+			}
+		}
+		return canSee;
+	}
+	private int treesVisDown(int height, int row, int col) {
+		int canSee=0;
+		for(int lookRow=row+1; lookRow<treeGrid.size(); lookRow++) {
+			canSee++;
+			if(treeGrid.get(lookRow).get(col).getHeight() >= height) {
+				break;
+			}
+		}
+		return canSee;
+	}
 }
