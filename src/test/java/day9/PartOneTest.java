@@ -1,7 +1,7 @@
 package day9;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.net.URL;
@@ -10,8 +10,6 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import day4.ElfPair;
 
 
 public class PartOneTest {
@@ -105,6 +103,7 @@ public class PartOneTest {
 		ropeMovesFromInput.populateInstructions();
 		
 		ropeMovesFromInput.performInstructions();
-		System.out.println(ropeMovesFromInput.getTotalVisitedSpots());
+//		System.out.println(ropeMovesFromInput.getTotalVisitedSpots());
+		assertEquals(6406, ropeMovesFromInput.getTotalVisitedSpots());
 	}
 }
