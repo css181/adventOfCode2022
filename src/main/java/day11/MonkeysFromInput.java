@@ -22,7 +22,7 @@ public class MonkeysFromInput {
 	}
 
 	public void populateMonkeys() {
-		ArrayList<Integer> curItemList = new ArrayList<Integer>();
+		ArrayList<Long> curItemList = new ArrayList<Long>();
 		Operation curOp = null;
 		ArrayList<Integer> curDivByNums = new ArrayList<Integer>();
 
@@ -43,19 +43,19 @@ public class MonkeysFromInput {
 				monkeys.add(new Monkey(curItemList, curOp, new TestDivBy(curDivByNums.get(0), curDivByNums.get(1), curDivByNums.get(2))));
 				
 				//reset all vars for next monkey
-				curItemList = new ArrayList<Integer>();
+				curItemList = new ArrayList<Long>();
 				curOp = null;
 				curDivByNums = new ArrayList<Integer>();
 			}
 		}
 	}
 
-	private ArrayList<Integer> getItemList(String line) {
-		ArrayList<Integer> list = new ArrayList<Integer>();
+	private ArrayList<Long> getItemList(String line) {
+		ArrayList<Long> list = new ArrayList<Long>();
 		line = line.replace(",", "");
 		for (String segment : line.split(" ")) {
 			if(isNumeric(segment)) {
-				list.add(Integer.valueOf(segment));
+				list.add(Long.valueOf(segment));
 			}
 		}
 		return list;
@@ -83,13 +83,14 @@ public class MonkeysFromInput {
 		return monkeys;
 	}
 
-	public void performRound() {
+	public void performRound(int divByForGettingBored) {
 		for(int x=0; x<monkeys.size(); x++) {
 			Monkey curMonkey = monkeys.get(x);
 			while (curMonkey.getItemList().size()>0) {
-				int item = curMonkey.getItemList().get(0);
-				int newItemNum = curMonkey.getOperation().perform(item);
-				newItemNum/=3; //from getting bored and your worry going down
+				long item = curMonkey.getItemList().get(0);
+				item = item % productOfAllDivBys();
+				long newItemNum = curMonkey.getOperation().perform(item);
+				newItemNum/=divByForGettingBored; //from getting bored and your worry going down
 				if(newItemNum%curMonkey.getTestDivBy().getDivBy()==0) {
 					monkeys.get(curMonkey.getTestDivBy().getTrueMonkeyIndex()).getItemList().add(newItemNum);
 				} else {
@@ -101,9 +102,17 @@ public class MonkeysFromInput {
 		}
 	}
 
-	public long getMonkeyBusiness() {
-		int highestPass = 0;
-		int secondHighPass = 0;
+	private int productOfAllDivBys() {
+		int product = 1;
+		for (Monkey monkey : monkeys) {
+			product*=monkey.getTestDivBy().getDivBy();
+		}
+		return product;
+	}
+
+	public double getMonkeyBusiness() {
+		double highestPass = 0;
+		double secondHighPass = 0;
 		for (Monkey monkey : monkeys) {
 			int curPasses = monkey.getNumOfPasses() ;
 			if(curPasses > highestPass) {

@@ -1,7 +1,7 @@
 package day11;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.net.URL;
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 public class PartOneTest {
 
 	private MonkeysFromInput monkeysFromInput;
+	private static final int divByForGettingBored = 3;
 	
 	@BeforeEach
 	public void setup() {
@@ -24,10 +25,11 @@ public class PartOneTest {
 	@Test
 	void getting_input_into_monkeys() throws Exception {
 		ArrayList<Monkey> expectedMonkeys = new ArrayList<Monkey>();
-		expectedMonkeys.add(new Monkey(new ArrayList<Integer>(Arrays.asList(79,98)), new Operation("*", 19), new TestDivBy(23,2,3)));
-		expectedMonkeys.add(new Monkey(new ArrayList<Integer>(Arrays.asList(54,65,75,74)), new Operation("+", 6), new TestDivBy(19,2,0)));
-		expectedMonkeys.add(new Monkey(new ArrayList<Integer>(Arrays.asList(79,60,97)), new Operation("*", -1), new TestDivBy(13,1,3)));
-		expectedMonkeys.add(new Monkey(new ArrayList<Integer>(Arrays.asList(74)), new Operation("+", 3), new TestDivBy(17,0,1)));
+		Monkey expected0 = new Monkey(new ArrayList<Long>(Arrays.asList(79l,98l)), new Operation("*", 19), new TestDivBy(23,2,3));
+		expectedMonkeys.add(expected0);
+		expectedMonkeys.add(new Monkey(new ArrayList<Long>(Arrays.asList(54l,65l,75l,74l)), new Operation("+", 6), new TestDivBy(19,2,0)));
+		expectedMonkeys.add(new Monkey(new ArrayList<Long>(Arrays.asList(79l,60l,97l)), new Operation("*", -1), new TestDivBy(13,1,3)));
+		expectedMonkeys.add(new Monkey(new ArrayList<Long>(Arrays.asList(74l)), new Operation("+", 3), new TestDivBy(17,0,1)));
 		
 		
 		URL fileName = getClass().getResource("SampleInput.txt");
@@ -42,10 +44,10 @@ public class PartOneTest {
 		monkeysFromInput.setFileToUse(new File(fileName.getPath()));
 		monkeysFromInput.populateMonkeys();
 
-		monkeysFromInput.performRound();
+		monkeysFromInput.performRound(divByForGettingBored);
 		
-		assertEquals(new ArrayList<Integer>(Arrays.asList(20,23,27,26)), monkeysFromInput.getMonkeys().get(0).getItemList());
-		assertEquals(new ArrayList<Integer>(Arrays.asList(2080,25,167,207,401,1046)), monkeysFromInput.getMonkeys().get(1).getItemList());
+		assertEquals(new ArrayList<Long>(Arrays.asList(20l,23l,27l,26l)), monkeysFromInput.getMonkeys().get(0).getItemList());
+		assertEquals(new ArrayList<Long>(Arrays.asList(2080l,25l,167l,207l,401l,1046l)), monkeysFromInput.getMonkeys().get(1).getItemList());
 		assertEquals(new ArrayList<Integer>(), monkeysFromInput.getMonkeys().get(2).getItemList());
 		assertEquals(new ArrayList<Integer>(), monkeysFromInput.getMonkeys().get(3).getItemList());
 	}
@@ -57,13 +59,13 @@ public class PartOneTest {
 		monkeysFromInput.populateMonkeys();
 
 		for(int x=0; x<20; x++) {
-			monkeysFromInput.performRound();
+			monkeysFromInput.performRound(divByForGettingBored);
 		}
 
-		assertEquals(new ArrayList<Integer>(Arrays.asList(10, 12, 14, 26, 34)), monkeysFromInput.getMonkeys().get(0).getItemList());
-		assertEquals(new ArrayList<Integer>(Arrays.asList(245, 93, 53, 199, 115)), monkeysFromInput.getMonkeys().get(1).getItemList());
-		assertEquals(new ArrayList<Integer>(), monkeysFromInput.getMonkeys().get(2).getItemList());
-		assertEquals(new ArrayList<Integer>(), monkeysFromInput.getMonkeys().get(3).getItemList());
+		assertEquals(new ArrayList<Long>(Arrays.asList(10l, 12l, 14l, 26l, 34l)), monkeysFromInput.getMonkeys().get(0).getItemList());
+		assertEquals(new ArrayList<Long>(Arrays.asList(245l, 93l, 53l, 199l, 115l)), monkeysFromInput.getMonkeys().get(1).getItemList());
+		assertEquals(new ArrayList<Long>(), monkeysFromInput.getMonkeys().get(2).getItemList());
+		assertEquals(new ArrayList<Long>(), monkeysFromInput.getMonkeys().get(3).getItemList());
 	}
 
 	@Test
@@ -73,7 +75,7 @@ public class PartOneTest {
 		monkeysFromInput.populateMonkeys();
 
 		for(int x=0; x<20; x++) {
-			monkeysFromInput.performRound();
+			monkeysFromInput.performRound(divByForGettingBored);
 		}
 
 		assertEquals(101, monkeysFromInput.getMonkeys().get(0).getNumOfPasses());
@@ -89,7 +91,7 @@ public class PartOneTest {
 		monkeysFromInput.populateMonkeys();
 
 		for(int x=0; x<20; x++) {
-			monkeysFromInput.performRound();
+			monkeysFromInput.performRound(divByForGettingBored);
 		}
 
 		assertEquals(10605, monkeysFromInput.getMonkeyBusiness());
@@ -99,7 +101,7 @@ public class PartOneTest {
 	void partOne_Answer() throws Exception {
 		monkeysFromInput.populateMonkeys();
 		for(int x=0; x<20; x++) {
-			monkeysFromInput.performRound();
+			monkeysFromInput.performRound(divByForGettingBored);
 		}
 		
 //		System.out.println(monkeysFromInput.getMonkeyBusiness());

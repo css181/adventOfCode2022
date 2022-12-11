@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Monkey {
 
-	private ArrayList<Integer> itemList;
+	private ArrayList<Long> itemList;
 	private Operation operation;
 	private TestDivBy testDivBy;
 	private int numOfPasses;
@@ -12,13 +12,13 @@ public class Monkey {
 	public Monkey() {
 	}
 	
-	public Monkey(ArrayList<Integer> itemList, Operation operation, TestDivBy testDivBy) {
+	public Monkey(ArrayList<Long> itemList, Operation operation, TestDivBy testDivBy) {
 		this.itemList = itemList;
 		this.operation = operation;
 		this.testDivBy = testDivBy;
 	}
 
-	protected ArrayList<Integer> getItemList() {
+	protected ArrayList<Long> getItemList() {
 		return itemList;
 	}
 

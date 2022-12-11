@@ -21,9 +21,9 @@ public class Operation {
 		this.operand = operand;
 	}
 	
-	public int perform(Integer item) {
-		int newNum = item;
-		int curOperand = operand;
+	public long perform(long item) {
+		long newNum = item;
+		long curOperand = operand;
 		if(operand==-1) { curOperand = item; }
 		if(toDo.equals("*")) {
 			newNum = item * curOperand;
@@ -53,7 +53,7 @@ public class Operation {
         Operation other = (Operation) obj;
 
         if(!this.toDo.equals(other.toDo)) { return false; }
-        if(this.operand != other.operand) { return false; }
+		if(this.operand!=other.operand) {return false;}
         
         return true;
     }
