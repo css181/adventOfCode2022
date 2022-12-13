@@ -53,61 +53,73 @@ public class ElevationsFromInput {
 	}
 			
 	private ElevationPath search(ElevationPath start, Elevation end, Queue<ElevationPath> queue, Set<Elevation> visited) {
-		if(start.getElevation().equals(end)) {
-			if(answer==null || start.getPriorElevations().size() < answer.getPriorElevations().size()) {
-				answer = start;
-				System.out.println(start);
-//				System.out.println(printAnswerGrid(start.getPriorElevations()));
+		boolean haveAnotherToCheck;
+		do {
+			haveAnotherToCheck = false;//re-initialize to see if we can stop after this node.
+//			System.out.println(start);
+			if(start.getElevation().equals(end)) {
+				if(answer==null || start.getPriorElevations().size() < answer.getPriorElevations().size()) {
+					answer = start;
+					queue = new ArrayDeque<ElevationPath>();
+					System.out.println(start);
+					System.out.println("Got there in [" + start.getPriorElevations().size() + "] steps.");
+//					System.out.println(printAnswerGrid(start.getPriorElevations()));
+				}
+				return answer;//we're done.
 			}
-			return answer;//we're done.
-		}
-//		System.out.println(visited.size() + "/" + (elevationGrid.size()*elevationGrid.get(0).size()));
-		visited.add(start.getElevation());
-		@SuppressWarnings("unchecked")
-		LinkedList<Elevation> curPath = (LinkedList<Elevation>) start.getPriorElevations().clone();
-		curPath.add(start.getElevation());
-		//add things to the queue
-		int curX = start.getElevation().getCoordinate().getX();
-		int curY = start.getElevation().getCoordinate().getY();
-		int curHeight = start.getElevation().getHeight();
-		//UP
-		if(curY > 0 && 
-				elevationGrid.get(curY-1).get(curX).getHeight() <= (curHeight+1)) {
-			if(!visited.contains(elevationGrid.get(curY-1).get(curX))) {
-				Elevation newElevation = elevationGrid.get(curY-1).get(curX);
-				queue.add(new ElevationPath(newElevation, curPath));
+//			System.out.println(visited.size() + "/" + (elevationGrid.size()*elevationGrid.get(0).size()));
+			visited.add(start.getElevation());
+			@SuppressWarnings("unchecked")
+			LinkedList<Elevation> curPath = (LinkedList<Elevation>) start.getPriorElevations().clone();
+			curPath.add(start.getElevation());
+			//add things to the queue
+			int curX = start.getElevation().getCoordinate().getX();
+			int curY = start.getElevation().getCoordinate().getY();
+			int curHeight = start.getElevation().getHeight();
+			//UP
+			if(curY > 0 && 
+					elevationGrid.get(curY-1).get(curX).getHeight() <= (curHeight+1)) {
+				if(!visited.contains(elevationGrid.get(curY-1).get(curX))) {
+					Elevation newElevation = elevationGrid.get(curY-1).get(curX);
+					queue.add(new ElevationPath(newElevation, curPath));
+				}
 			}
-		}
-		//DOWN
-		if(curY < (elevationGrid.size()-1) && 
-				elevationGrid.get(curY+1).get(curX).getHeight() <= (curHeight+1)) {
-			if(!visited.contains(elevationGrid.get(curY+1).get(curX))) {
-				Elevation newElevation = elevationGrid.get(curY+1).get(curX);
-				queue.add(new ElevationPath(newElevation, curPath));
+			//DOWN
+			if(curY < (elevationGrid.size()-1) && 
+					elevationGrid.get(curY+1).get(curX).getHeight() <= (curHeight+1)) {
+				if(!visited.contains(elevationGrid.get(curY+1).get(curX))) {
+					Elevation newElevation = elevationGrid.get(curY+1).get(curX);
+					queue.add(new ElevationPath(newElevation, curPath));
+				}
 			}
-		}
-		//LEFT
-		if(curX > 0 
-				&& elevationGrid.get(curY).get(curX-1).getHeight() <= (curHeight+1)) {
-			if(!visited.contains(elevationGrid.get(curY).get(curX-1))) {
-				Elevation newElevation = elevationGrid.get(curY).get(curX-1);
-				queue.add(new ElevationPath(newElevation, curPath));
+			//LEFT
+			if(curX > 0 
+					&& elevationGrid.get(curY).get(curX-1).getHeight() <= (curHeight+1)) {
+				if(!visited.contains(elevationGrid.get(curY).get(curX-1))) {
+					Elevation newElevation = elevationGrid.get(curY).get(curX-1);
+					queue.add(new ElevationPath(newElevation, curPath));
+				}
 			}
-		}
-		//RIGHT
-		if(curX < (elevationGrid.get(curY).size() - 1)
-				&& elevationGrid.get(curY).get(curX+1).getHeight() <= (curHeight+1)) {
-			if(!visited.contains(elevationGrid.get(curY).get(curX+1))) {
-				Elevation newElevation = elevationGrid.get(curY).get(curX+1);
-				queue.add(new ElevationPath(newElevation, curPath));
+			//RIGHT
+			if(curX < (elevationGrid.get(curY).size() - 1)
+					&& elevationGrid.get(curY).get(curX+1).getHeight() <= (curHeight+1)) {
+				if(!visited.contains(elevationGrid.get(curY).get(curX+1))) {
+					Elevation newElevation = elevationGrid.get(curY).get(curX+1);
+					queue.add(new ElevationPath(newElevation, curPath));
+				}
 			}
-		}
-		while (queue.size()>0) {
-			ElevationPath newTrial = queue.poll();
-			if(!visited.contains(newTrial.getElevation()))
-				search(newTrial, end, queue, visited);
-		}
-		return answer;
+		
+			while (queue.size() > 0) {
+				ElevationPath newTrial = queue.poll();
+				if(!visited.contains(newTrial.getElevation())) {
+					haveAnotherToCheck = true;
+					start = newTrial;
+					break;//Go back through the main loop with this newTrial
+				}//else keep polling off the queue until we get to the next one that wasn't already visited
+			}
+		}while (haveAnotherToCheck);
+		
+		return null; //Should not hit this, should return from getting an answer above.
 	}
 
 	@SuppressWarnings("unused")
