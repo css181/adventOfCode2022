@@ -51,6 +51,7 @@ public class ShapeMovesFromInput {
 			chamber.grid[row][0].value='|';
 			chamber.grid[row][8].value='|';
 		}
+		chamber.lowestRockIndex=3;
 	}
 
 	public ChamberTile[][] getGrid() {
@@ -65,14 +66,14 @@ public class ShapeMovesFromInput {
 	}
 
 	public void processNewShapeDropping() {
-		if(curShapeIndex==shapes.size()-1) {
+		if(curShapeIndex==shapes.size()) {
 			curShapeIndex=0;
 		}
 		Shape nextShape = shapes.get(curShapeIndex++);
 		chamber = nextShape.addShapeToGrid(chamber);
 		boolean shapeIsStillMovingDown = false;
 		do {
-			if(directionIndex==directions.size()-1) {
+			if(directionIndex==directions.size()) {
 				directionIndex=0;
 			}
 			shapeIsStillMovingDown = nextShape.processOneMove(directions.get(directionIndex ++), chamber);

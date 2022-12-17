@@ -83,24 +83,10 @@ public abstract class Shape {
 	}
 
 	private Chamber copyExistingGridShiftingDownForNewShape(Shape shape, Chamber chamber) {
-		Chamber temp = new Chamber();
-		while (chamber.highestRockIndex<3) {
-			temp.grid = new ChamberTile[chamber.grid.length+1][chamber.grid[0].length];
-			for(int col=0; col<9; col++) {
-				temp.grid[0][col] = new ChamberTile();
-			}
-			temp.grid[0][0].value='|';
-			temp.grid[0][8].value='|';
-			for(int row=0; row<chamber.grid.length; row++) {
-				for(int col=0; col<9; col++) {
-					temp.grid[row+1][col] = chamber.grid[row][col];
-				}
-			}
-			chamber.highestRockIndex++;
-			chamber.grid=temp.grid;
-		}
+		getChamberToHaveHighestRockIndex3(chamber);
 		Chamber newChamber = new Chamber();
 		int newHeight = chamber.grid.length+shape.getHeight();
+		newChamber.lowestRockIndex+=shape.getHeight();
 		newChamber.grid = new ChamberTile[newHeight][9];
 		int oldRow=0;
 		for(int row=shape.getHeight(); row<newHeight; row++) {
@@ -112,19 +98,52 @@ public abstract class Shape {
 		return newChamber;
 	}
 
+	private void getChamberToHaveHighestRockIndex3(Chamber chamber) {
+		Chamber temp = new Chamber();
+		while (chamber.lowestRockIndex<3) {
+			temp.grid = new ChamberTile[chamber.grid.length+1][chamber.grid[0].length];
+			for(int col=0; col<9; col++) {
+				temp.grid[0][col] = new ChamberTile();
+			}
+			temp.grid[0][0].value='|';
+			temp.grid[0][8].value='|';
+			for(int row=0; row<chamber.grid.length; row++) {
+				for(int col=0; col<9; col++) {
+					temp.grid[row+1][col] = chamber.grid[row][col];
+				}
+			}
+			chamber.lowestRockIndex++;
+			chamber.grid=temp.grid;
+		}
+		while (chamber.lowestRockIndex>3) {
+			temp.grid = new ChamberTile[chamber.grid.length-1][chamber.grid[0].length];
+			for(int row=1; row<chamber.grid.length; row++) {
+				for(int col=0; col<9; col++) {
+					temp.grid[row-1][col] = chamber.grid[row][col];
+				}
+			}
+			chamber.lowestRockIndex--;
+			chamber.grid=temp.grid;
+		}
+	}
+
 	//returns true we completed a move down, return false if we are resting on something.
 	public boolean processOneMove(Character character, Chamber chamber) {
 		switch (character) {
 		case '<': 
 			//Try to move LEFT
-			if(chamber.leftMostShapeIndex>1) {
-				moveShapeLeft(chamber);
+			if(areAllSpotsLeftOfShapeEmpty(chamber)) {
+				if(chamber.leftMostShapeIndex>1) {
+					moveShapeLeft(chamber);
+				}
 			}
 			break;
 		case '>':
 			//Try to move RIGHT
-			if(chamber.rightMostShapeIndex<7) {
-				moveShapeRight(chamber);
+			if(areAllSpotsRightOfShapeEmpty(chamber)) {
+				if(chamber.rightMostShapeIndex<7) {
+					moveShapeRight(chamber);
+				}
 			}
 			break;
 		default:
@@ -147,8 +166,8 @@ public abstract class Shape {
 		for(int row=chamber.grid.length-1; row>=0; row--) {
 			for(int col=1; col<=7; col++) {
 				ChamberTile curTile = chamber.grid[row][col];
-				if(curTile.isCurrentShape && row>chamber.highestRockIndex) {
-					chamber.highestRockIndex=row;
+				if(curTile.isCurrentShape && row<chamber.lowestRockIndex) {
+					chamber.lowestRockIndex=row;
 				}
 				curTile.isCurrentShape=false;
 			}
@@ -239,5 +258,34 @@ public abstract class Shape {
 		}
 		return true;
 	}
-
+	private boolean areAllSpotsRightOfShapeEmpty(Chamber chamber) {
+		//TODO optimize what to look through later
+		for(int row=chamber.grid.length-1; row>0; row--) {
+			for(int col=1; col<=7; col++) {
+				ChamberTile curTile = chamber.grid[row][col];
+				if(curTile.isCurrentShape) {
+					ChamberTile rightTile = chamber.grid[row][col+1];
+					if((rightTile.value=='#') && !rightTile.isCurrentShape) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	private boolean areAllSpotsLeftOfShapeEmpty(Chamber chamber) {
+		//TODO optimize what to look through later
+		for(int row=chamber.grid.length-1; row>0; row--) {
+			for(int col=1; col<=7; col++) {
+				ChamberTile curTile = chamber.grid[row][col];
+				if(curTile.isCurrentShape) {
+					ChamberTile leftTile = chamber.grid[row][col-1];
+					if((leftTile.value=='#') && !leftTile.isCurrentShape) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 }

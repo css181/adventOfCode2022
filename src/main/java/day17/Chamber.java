@@ -5,14 +5,14 @@ public class Chamber {
 	public ChamberTile[][] grid;
 	public int leftMostShapeIndex;
 	public int rightMostShapeIndex;
-	public int highestRockIndex;
+	public int lowestRockIndex;
 	public static final int DEFAULT_LEFT=8;
 	public static final int DEFAULT_RIGHT=0;
 	
 	public Chamber() {
 		this.leftMostShapeIndex=8;
 		this.rightMostShapeIndex=0;
-		this.highestRockIndex=3;
+		this.lowestRockIndex=3;
 	}
 	
 	@Override

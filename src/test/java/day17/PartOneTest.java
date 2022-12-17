@@ -154,7 +154,7 @@ public class PartOneTest {
 	}
 	
 	@Test
-	void first_five_shapes_with_sample_directions_should_look_correct() throws Exception {
+	void first_10_shapes_with_sample_directions_should_look_correct() throws Exception {
 		URL fileName = getClass().getResource("SampleInput.txt");
 		shapeMovesFromInput.setFileToUse(new File(fileName.getPath()));
 		shapeMovesFromInput.populateDirectionsAndShapesList();
@@ -165,27 +165,63 @@ public class PartOneTest {
 		shapeMovesFromInput.processNewShapeDropping();
 		shapeMovesFromInput.processNewShapeDropping();
 		shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.addShapeToGrid(new HorizontalShape());
 		
-		String expectedPring = "|.......|\n"
-							 + "|.......|\n"
-							 + "|.......|\n"
-							 + "|....##.|\n"
-							 + "|....##.|\n"
-							 + "|....#..|\n"
-							 + "|..#.#..|\n"
-							 + "|..#.#..|\n"
-							 + "|#####..|\n"
-							 + "|..###..|\n"
-							 + "|...#...|\n"
-							 + "|..####.|\n"
-							 + "+#######+";
+		String expectedPring = 
+				  "|..####.|\n"
+				+ "|.......|\n"
+				+ "|.......|\n"
+				+ "|.......|\n"
+				+ "|....#..|\n"
+				+ "|....#..|\n"
+				+ "|....##.|\n"
+				+ "|##..##.|\n"
+				+ "|######.|\n"
+				+ "|.###...|\n"
+				+ "|..#....|\n"
+				+ "|.####..|\n"
+				+ "|....##.|\n"
+				+ "|....##.|\n"
+				+ "|....#..|\n"
+				+ "|..#.#..|\n"
+				+ "|..#.#..|\n"
+				+ "|#####..|\n"
+				+ "|..###..|\n"
+				+ "|...#...|\n"
+				+ "|..####.|\n"
+				+ "+#######+";
 		assertEquals(expectedPring, shapeMovesFromInput.printGrid());
 	}
 	
 	@Test
+	void verify_2022_shapes_in_sample_input_tower_is_3068_tall() throws Exception {
+		URL fileName = getClass().getResource("SampleInput.txt");
+		shapeMovesFromInput.setFileToUse(new File(fileName.getPath()));
+		shapeMovesFromInput.populateDirectionsAndShapesList();
+		shapeMovesFromInput.generateStartGrid(3);
+		
+		for(int x=0; x<2022; x++)
+			shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.addShapeToGrid(new HorizontalShape());
+		
+		assertEquals(3068, shapeMovesFromInput.getGrid().length-5);//3 empty + floor + new Horizontal
+	}
+	
+	@Test
 	void partOne_Answer() throws Exception {
-//		elfPairsFromInput.populateElfPairs();
-//		System.out.println(elfPairsFromInput.getTotalContainedPairs());
-//		assertEquals(500, elfPairsFromInput.getTotalContainedPairs());
+		shapeMovesFromInput.populateDirectionsAndShapesList();
+		shapeMovesFromInput.generateStartGrid(3);
+		
+		for(int x=0; x<2022; x++)
+			shapeMovesFromInput.processNewShapeDropping();
+		shapeMovesFromInput.addShapeToGrid(new HorizontalShape());
+		
+		System.out.println(shapeMovesFromInput.getGrid().length-5);//3 empty + floor + new Horizontal
+//		assertEquals(3068, shapeMovesFromInput.getGrid().length-5);//3 empty + floor + new Horizontal
 	}
 }
