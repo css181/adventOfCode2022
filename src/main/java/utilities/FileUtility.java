@@ -39,6 +39,23 @@ public class FileUtility {
 		return array;
 	}
 	
+	public static ArrayList<Character> convertFileToCharacters(File file) {
+		ArrayList<Character> curList =  new ArrayList<Character>();
+		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+		    String line;
+		    while ((line = br.readLine()) != null) {
+		    	for (char c : line.toCharArray()) {
+		    		curList.add(c);
+		    	}
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return curList;
+	}
+	
 	public static ArrayList<ArrayList<Character>> convertFileToCharacterArray(File file) {
 		ArrayList<ArrayList<Character>> array = new ArrayList<ArrayList<Character>>();
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
