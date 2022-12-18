@@ -2,34 +2,27 @@ package day17;
 
 public class StateInfo {
 
-	private int leftMost;
-	private int rightMost;
+	private char[][] subGrid;
 	private int directionIndex;
 	private int totalShapestoYieldThis;
 	
 	
-	public StateInfo(int leftMost, int rightMost, int directionIndex, int totalShapestoYieldThis) {
+	public StateInfo(ChamberTile[][] grid, int directionIndex, int totalShapestoYieldThis) {
 		super();
-		this.leftMost = leftMost;
-		this.rightMost = rightMost;
+		this.subGrid=getSubGridFromGrid(grid);
 		this.directionIndex = directionIndex;
 		this.totalShapestoYieldThis = totalShapestoYieldThis;
 	}
 
-	protected int getLeftMost() {
-		return leftMost;
-	}
-
-	protected void setLeftMost(int leftMost) {
-		this.leftMost = leftMost;
-	}
-
-	protected int getRightMost() {
-		return rightMost;
-	}
-
-	protected void setRightMost(int rightMost) {
-		this.rightMost = rightMost;
+	private char[][] getSubGridFromGrid(ChamberTile[][] grid) {
+		char[][] returnVal = new char[10][9];
+		int end = Math.min(10, grid.length-1);
+		for(int x=0; x<end; x++) {
+			for(int y=0; y<9; y++) {
+				returnVal[x][y] = grid[x][y].value;
+			}
+		}
+		return returnVal;
 	}
 
 	protected int getDirectionIndex() {
@@ -48,9 +41,17 @@ public class StateInfo {
 		this.totalShapestoYieldThis = totalShapestoYieldThis;
 	}
 
+	protected char[][] getSubGrid() {
+		return subGrid;
+	}
+
+	protected void setSubGrid(char[][] subGrid) {
+		this.subGrid = subGrid;
+	}
+
 	@Override
     public String toString() {
-		String print = "{Left: " + leftMost + ", Right: " + rightMost + ", DirectionIndex: " + directionIndex + "}";
+		String print = "{SubGrid: " + subGrid + ", DirectionIndex: " + directionIndex + "}";
 		return print;
     } 
     
@@ -67,8 +68,15 @@ public class StateInfo {
         if(!(obj instanceof StateInfo)) { return false; }
         StateInfo other = (StateInfo) obj;
 
-        if(this.leftMost != other.leftMost) { return false; }
-        if(this.rightMost != other.rightMost) { return false; }
+        if(this.subGrid==null && other.subGrid!=null) { return false; }
+        if(this.subGrid!=null && other.subGrid==null) { return false; }
+		for(int row=0; row<subGrid.length; row++) {
+			for(int col=0; col<subGrid[row].length; col++) {
+				if(this.subGrid[row][col]!=(other.subGrid[row][col])) {
+					return false;
+				}
+			}
+		}
         if(this.directionIndex != other.directionIndex) { return false; }
         
         return true;

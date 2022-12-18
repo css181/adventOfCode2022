@@ -33,7 +33,8 @@ public class PartTwoTest {
 		shapeMovesFromInput.populateDirectionsAndShapesList();
 		shapeMovesFromInput.generateStartGrid(3);
 		
-		System.out.println("So for 1000000000000: " + shapeMovesFromInput.getTotalHeightOf1TrillionShapes());
-		//		assertEquals(1514285714288l, 1000000000000l/50*79);
+		long answer = shapeMovesFromInput.getTotalHeightOf1TrillionShapes();
+		System.out.println("So for 1000000000000: " + answer);
+		assertEquals(1555113636385l, answer);
 	}
 }

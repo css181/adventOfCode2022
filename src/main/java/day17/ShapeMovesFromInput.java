@@ -128,7 +128,7 @@ public class ShapeMovesFromInput {
 			count++;
 			processNewShapeDropping();
 			if(curShapeIndex==shapes.size()) {
-				StateInfo stateInfo = new StateInfo(chamber.priorLeftMostIndex, chamber.priorRightMostIndex, directionIndex, count);
+				StateInfo stateInfo = new StateInfo(chamber.grid, directionIndex, count);
 				stateInfoList.add(stateInfo);
 				if(doesSetContainCurInfo(stateInfo, stateInfoWhenShapesReset)) {
 //					System.out.println("Pattern repeats at directionIndex: " + directionIndex);
@@ -175,8 +175,8 @@ public class ShapeMovesFromInput {
 		int heightAtRemainderPlusThroughFirstPattern = getHeightAfterXShapes(patternInfo.getTotalShapestoYieldThis() + remainderShapesAfterLastPattern);
 		int heightOfRemainderShapes = heightAtRemainderPlusThroughFirstPattern-heightThroughfirstPattern;
 		long answer = heightThroughLastPattern + heightOfRemainderShapes;
-		System.out.println("Pattern size=" + numOfShapesInPattern + ", heightThroughFirstPattern=" + heightThroughfirstPattern);
-		System.out.println("Pattern height=" + patternHeight);
+		System.out.println("Shapes before pattern=" + numOfShapesUntilPatternStarts + ", height of them=" + heightAtStartOfPattern);
+		System.out.println("Pattern size=" + numOfShapesInPattern + ", Pattern height=" + patternHeight);
 		System.out.println("Remaining shapes=" + remainderShapesAfterLastPattern + ", height of those=" + heightOfRemainderShapes);
 		return answer;
 	}
@@ -187,7 +187,7 @@ public class ShapeMovesFromInput {
 		do {
 			count++;
 			processNewShapeDropping();
-			StateInfo stateInfo = new StateInfo(chamber.priorLeftMostIndex, chamber.priorRightMostIndex, directionIndex, count);
+			StateInfo stateInfo = new StateInfo(chamber.grid, directionIndex, count);
 			if(patternInfo.equals(stateInfo)) {
 				System.out.println("Pattern begins after only: " + count);
 				return count;
