@@ -83,7 +83,6 @@ public abstract class Shape {
 	}
 
 	private Chamber copyExistingGridShiftingDownForNewShape(Shape shape, Chamber chamber) {
-		getChamberToHaveHighestRockIndex3(chamber);
 		Chamber newChamber = new Chamber();
 		int newHeight = chamber.grid.length+shape.getHeight();
 		newChamber.lowestRockIndex+=shape.getHeight();
@@ -96,35 +95,6 @@ public abstract class Shape {
 			oldRow++;
 		}
 		return newChamber;
-	}
-
-	private void getChamberToHaveHighestRockIndex3(Chamber chamber) {
-		Chamber temp = new Chamber();
-		while (chamber.lowestRockIndex<3) {
-			temp.grid = new ChamberTile[chamber.grid.length+1][chamber.grid[0].length];
-			for(int col=0; col<9; col++) {
-				temp.grid[0][col] = new ChamberTile();
-			}
-			temp.grid[0][0].value='|';
-			temp.grid[0][8].value='|';
-			for(int row=0; row<chamber.grid.length; row++) {
-				for(int col=0; col<9; col++) {
-					temp.grid[row+1][col] = chamber.grid[row][col];
-				}
-			}
-			chamber.lowestRockIndex++;
-			chamber.grid=temp.grid;
-		}
-		while (chamber.lowestRockIndex>3) {
-			temp.grid = new ChamberTile[chamber.grid.length-1][chamber.grid[0].length];
-			for(int row=1; row<chamber.grid.length; row++) {
-				for(int col=0; col<9; col++) {
-					temp.grid[row-1][col] = chamber.grid[row][col];
-				}
-			}
-			chamber.lowestRockIndex--;
-			chamber.grid=temp.grid;
-		}
 	}
 
 	//returns true we completed a move down, return false if we are resting on something.
@@ -172,6 +142,8 @@ public abstract class Shape {
 				curTile.isCurrentShape=false;
 			}
 		}
+		chamber.priorLeftMostIndex=chamber.leftMostShapeIndex;
+		chamber.priorRightMostIndex=chamber.rightMostShapeIndex;
 		chamber.leftMostShapeIndex=Chamber.DEFAULT_LEFT;
 		chamber.rightMostShapeIndex=Chamber.DEFAULT_RIGHT;
 	}
