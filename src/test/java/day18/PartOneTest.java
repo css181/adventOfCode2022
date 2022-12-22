@@ -1,7 +1,7 @@
 package day18;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.File;
 import java.net.URL;
@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import utilities.FileUtility;
 
 
 public class PartOneTest {
@@ -57,7 +55,7 @@ public class PartOneTest {
 	@Test
 	void partOne_Answer() throws Exception {
 		cubesFromInput.populateCubes();
-		System.out.println(cubesFromInput.getTotalSurfaceAreaOfCubes());
-//		assertEquals(500, cubesFromInput.getTotalSurfaceAreaOfCubes());
+//		System.out.println(cubesFromInput.getTotalSurfaceAreaOfCubes());
+		assertEquals(4536, cubesFromInput.getTotalSurfaceAreaOfCubes());
 	}
 }
